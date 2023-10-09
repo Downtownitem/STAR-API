@@ -1,0 +1,23 @@
+[
+  {
+    "name": "get_information",
+    "description": "Generates and answers secondary questions and provides recommendations on a procedure based on an initial text query.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query_about": {
+          "type": "string",
+          "description": "Main question/text to search and generate secondary questions"
+        },
+        "suggestions_about": {
+          "type": "string",
+          "description": "Question/text to derive recommendations about a related procedure"
+        }
+      },
+      "required": [
+        "query_about",
+        "suggestions_about"
+      ]
+    }
+  }
+]

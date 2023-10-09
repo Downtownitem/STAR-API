@@ -1,0 +1,12 @@
+{
+  "Categorias posibles": [
+    "general",
+    "admisiones",
+    "matriculas",
+    "cursos",
+    "profesores",
+    "salones",
+    "horarios",
+    "otros"
+  ]
+}

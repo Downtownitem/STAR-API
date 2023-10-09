@@ -1,0 +1,14 @@
+openai
+pandas
+requests
+colorama
+python-dotenv
+fastapi
+pydantic
+PyMySQL
+textract
+pypdf2
+beautifulsoup4
+pinecone-client
+uvicorn
+gunicorn
