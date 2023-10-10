@@ -21,11 +21,6 @@ app.add_middleware(
 running_conversations: Dict[str, conversation] = {}
 
 
-@app.get('/')
-async def llm_home():
-    return {'status': f'success'}
-
-
 @app.get('/start-conversation')
 async def llm_start_conversation():
     try:
