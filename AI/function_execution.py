@@ -2,6 +2,7 @@ import os
 import json
 from typing import List, Dict
 import openai
+import threading
 
 from Database.Vectorial.vector_database import FullControl
 
@@ -75,13 +76,18 @@ In case it is a text create 3 questions that are related to it, in case it is a 
 def get_information_about(question, suggestion):
     final_response = {}
 
-    if suggestion is not None:
-        yield {'type': 'function', 'content': 'Creating for suggestions'}
+    def get_suggestion_thread(suggestion):
         suggestion = get_suggestions(suggestion)
         final_response['suggestions'] = suggestion
 
+    if suggestion is not None:
+        yield {'type': 'function', 'content': 'Creating for suggestions'}
+        suggestion_thread = threading.Thread(target=get_suggestion_thread, args=(suggestion,))
+        suggestion_thread.start()
+
     if question is not None:
         yield {'type': 'function', 'content': 'Creating related questions'}
+
         secondary = get_secondary_questions(question)
 
         secondary_solutions = []
@@ -94,6 +100,9 @@ def get_information_about(question, suggestion):
 
             secondary_solutions.append(temp)
         final_response['related_questions'] = secondary_solutions
+
+    if suggestion is not None:
+        suggestion_thread.join()
 
     yield {'type': 'function', 'content': 'Searching for ' + question}
     final_response['main_question'] = {
