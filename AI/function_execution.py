@@ -5,8 +5,7 @@ import openai
 
 from Database.Vectorial.vector_database import FullControl
 
-with open(os.path.join(os.path.dirname(__file__), 'Resources/keys.json'), 'r') as f:
-    openai.api_key = json.load(f)['OPENAI_API_KEY']
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 control = FullControl()
 
@@ -75,7 +74,7 @@ In case it is a text create 3 questions that are related to it, in case it is a 
 
 def get_information_about(question, suggestion):
     final_response = {}
-    
+
     if suggestion is not None:
         yield {'type': 'function', 'content': 'Creating for suggestions'}
         suggestion = get_suggestions(suggestion)
