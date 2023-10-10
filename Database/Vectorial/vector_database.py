@@ -61,7 +61,7 @@ class FullControl(Pinecone):
             self.database.delete_by_id(i)
 
     def query(self, text: str, filter: dict = None, top_k: int = 2):
-        emb = Embeddings(text, self.student_info)
+        emb = Embeddings(text)
         embedding = emb.get_embedding()
         query_result = self.query_data(embedding, filter, top_k)
         query_result = json.loads(str(query_result).replace("'", '"'))
