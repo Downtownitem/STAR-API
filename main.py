@@ -1,11 +1,13 @@
 import os
-
+import dotenv
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
 from Data.conv import conversation
+
+dotenv.load_dotenv()
 
 app = FastAPI()
 app.add_middleware(
@@ -17,6 +19,11 @@ app.add_middleware(
 )
 
 running_conversations: Dict[str, conversation] = {}
+
+
+@app.get('/')
+async def llm_home():
+    return {'status': f'success'}
 
 
 @app.get('/start-conversation')

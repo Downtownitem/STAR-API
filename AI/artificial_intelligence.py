@@ -9,11 +9,8 @@ import json
 class OpenAI:
 
     def __init__(self):
-        with open(os.path.join(os.path.dirname(__file__), 'Resources/keys.json'), 'r') as f:
-            openai.api_key = json.load(f)['OPENAI_API_KEY']
-
+        openai.api_key = os.getenv('OPENAI_API_KEY')
         self.functions = get_function_list()
-
         self.messages = [
             {
                 'role': 'system',

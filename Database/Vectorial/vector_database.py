@@ -9,14 +9,11 @@ import json
 class Pinecone:
 
     def __init__(self):
-        with open(os.path.join(os.path.dirname(__file__), 'keys.json'), 'r') as f:
-            info = json.load(f)
-            print(info)
-            pinecone.init(
-                api_key=info['PINECONE_API_KEY'],
-                environment=info['PINECONE_ENV']
-            )
-            self.pinecone = pinecone.Index('star-proyect')
+        pinecone.init(
+                api_key=os.getenv('PINECONE_API_KEY'),
+                environment=os.getenv('PINECONE_ENV')
+        )
+        self.pinecone = pinecone.Index(index_name=os.getenv('PINECONE_INDEX'))
 
     def insert_data(self, data: pd.DataFrame, metadata: bool):
         if metadata:

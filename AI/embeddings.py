@@ -3,7 +3,6 @@ from typing import List, Dict
 import pandas as pd
 import ast
 import os
-import json
 
 
 def fix_text(text: str) -> str:
@@ -13,12 +12,10 @@ def fix_text(text: str) -> str:
 
 class Embeddings:
 
-    def __init__(self, text: str, student_info: dict = None):
+    def __init__(self, text: str):
         super().__init__()
         self.text = text
-
-        with open(os.path.join(os.path.dirname(__file__), 'Resources/keys.json'), 'r') as f:
-            openai.api_key = json.load(f)['OPENAI_API_KEY']
+        openai.api_key = os.getenv('OPENAI_API_KEY')
 
     def get_embedding(self) -> List[float]:
         request = openai.Embedding.create(

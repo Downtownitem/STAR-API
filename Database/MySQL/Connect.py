@@ -1,7 +1,5 @@
-import json
-
-import pymysql
 import dotenv
+import pymysql
 import os
 from typing import Optional
 
@@ -14,17 +12,13 @@ def connect():
     global conn
     if conn is None:
         cert_path = os.path.join(os.path.dirname(__file__), 'cacert.pem')
-        keys_path = os.path.join(os.path.dirname(__file__), 'keys.json')
-
-        with open(keys_path, 'r') as f:
-            keys = json.load(f)
 
         try:
             conn = pymysql.connect(
-                host=keys['DATABASE_HOST'],
-                database=keys['DATABASE_NAME'],
-                user=keys['DATABASE_USER'],
-                password=keys['DATABASE_PASSWORD'],
+                host=os.getenv('DATABASE_HOST'),
+                database=os.getenv('DATABASE_NAME'),
+                user=os.getenv('DATABASE_USER'),
+                password=os.getenv('DATABASE_PASSWORD'),
                 ssl_ca=cert_path
             )
             print(f"Connection established to database: {conn}")
